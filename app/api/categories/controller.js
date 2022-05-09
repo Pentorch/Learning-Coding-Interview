@@ -16,4 +16,19 @@ module.exports = {
       next(err);
     }
   },
+  createCategory: async (req, res, next) => {
+    try {
+      const { name } = req.body;
+      const categories = await Category.create({
+        name,
+        user: req.user.id,
+      });
+      res.status(201).json({
+        message: "Success create category",
+        data: categories,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
 };

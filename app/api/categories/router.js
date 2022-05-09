@@ -1,10 +1,8 @@
 const express = require("express");
+const { auth } = require("../../middlewares/auth");
+const { getAllCategories } = require("./controller");
 const router = express.Router();
 
-router.get("/categories", function (req, res, next) {
-  res.status(200).json({
-    message: "Auth route",
-  });
-});
+router.get("/categories", auth, getAllCategories);
 
 module.exports = router;

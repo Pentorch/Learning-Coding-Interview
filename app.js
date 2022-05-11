@@ -8,6 +8,7 @@ const categoriesRouter = require("./app/api/categories/router");
 const booksRouter = require("./app/api/books/router");
 const uploadsRouter = require("./app/api/uploads/router");
 const checkoutsRouter = require("./app/api/checkouts/router");
+const transactionsRouter = require("./app/api/transactions/router");
 
 const URL = `/api/v1`;
 
@@ -27,5 +28,6 @@ app.use(`${URL}`, categoriesRouter);
 app.use(`${URL}`, booksRouter);
 app.use(`${URL}`, uploadsRouter);
 app.use(`${URL}`, checkoutsRouter);
+app.use(`${URL}`, transactionsRouter);
 
 module.exports = app;

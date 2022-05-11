@@ -9,7 +9,10 @@
 - MySQL
 - Sequelize ORM
 - JWT
--
+
+### Done Code
+
+- Clean Code
 
 ## dependencies
 

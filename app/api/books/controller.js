@@ -68,4 +68,49 @@ module.exports = {
       next(err);
     }
   },
+  updateBooks: async (req, res, next) => {
+    try {
+      let user = req.user.id;
+      const { id } = req.params;
+      const { title, price, category, author, published, stock, image } =
+        req.body;
+
+      const checkCategory = await Category.findOne({
+        where: {
+          id: category,
+          user: user,
+        },
+      });
+
+      if (!checkCategory) {
+        return res.status(404).json({ message: "id category not found" });
+      }
+
+      const checkBook = await Book.findOne({
+        where: { id: id },
+      });
+
+      if (!checkBook) {
+        return res.status(404).json({ message: "id book not found" });
+      }
+
+      const books = await checkBook.update({
+        title,
+        price,
+        category,
+        author,
+        published,
+        stock,
+        image,
+        user: user,
+      });
+
+      res.status(200).json({
+        message: "Success update books",
+        data: books,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
 };

@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 module.exports = {
   getAllBooks: async (req, res, next) => {
     try {
-      const { keyword = "" } = req.query;
+      const { keyword = "", category = "" } = req.query;
 
       let condition = {
         user: req.user.id,
@@ -13,6 +13,11 @@ module.exports = {
       if (keyword !== "") {
         condition = { ...condition, title: { [Op.like]: `%${keyword}%` } };
       }
+
+      if (category !== "") {
+        condition = { ...condition, category: category };
+      }
+
       const books = await Book.findAll({
         where: condition,
         include: {
@@ -44,12 +49,10 @@ module.exports = {
       });
 
       if (!checkCategory) {
-        return res.status(404).json({
-          message: "Category not found",
-        });
+        return res.status(404).json({ message: "id category not found" });
       }
 
-      const book = await Book.create({
+      const books = await Book.create({
         title,
         price,
         category,
@@ -61,13 +64,14 @@ module.exports = {
       });
 
       res.status(201).json({
-        message: "Success create book",
-        data: book,
+        message: "Success create books",
+        data: books,
       });
     } catch (err) {
       next(err);
     }
   },
+
   updateBooks: async (req, res, next) => {
     try {
       let user = req.user.id;

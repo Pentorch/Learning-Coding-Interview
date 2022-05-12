@@ -6,7 +6,7 @@
 
 - NodeJS
 - MySQL
-- MySQL
+- ExpressJS
 - Sequelize ORM
 - JWT
 
